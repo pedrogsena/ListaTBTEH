@@ -61,7 +61,9 @@ int converte(int binario[], int qtebits){
 /* Solução preliminar - não funciona para
     parte fracionária com zeros à esquerda */
 float compoe(int inteiro,int fracionario){
-    float saida=1.0*inteiro,termo=1.0*fracionario;
+    float saida,termo;
+    saida=(float)inteiro;
+    termo=(float)fracionario;
     while(termo>1.0){
         termo=termo*0.1;
     }
@@ -71,8 +73,8 @@ float compoe(int inteiro,int fracionario){
 
 float compoe_v2(int inteiro,int fracionario,int ajuste){
     float saida,termo;
-    saida=1.0*inteiro;
-    termo=1.0*fracionario;
+    saida=(float)inteiro;
+    termo=(float)fracionario;
     while(termo>1.0){
         termo*=0.1;
     }
@@ -86,11 +88,12 @@ float compoe_v2(int inteiro,int fracionario,int ajuste){
 
 /* Questão 6 */
 int maior_de_dois(int x,int y){
-    return x*(x>=y)+y*(x<y);
+    if(x>=y) return x;
+    return y;
 }
 
 /* Questão 7 */
-int menor_de_tres(int x,int y,int z){
+int menor_de_tres(int x, int y, int z){
     int saida;
     if(x<=y){
         if(x<=z) saida=x;
@@ -101,10 +104,6 @@ int menor_de_tres(int x,int y,int z){
         else saida=z;
     }
     return saida;
-}
-
-int menor_de_tres_v2(int x,int y,int z){
-    return x*(x<=y&&x<=z)+y*(x>y&&y<=z)+z*(x>y&&y>z);
 }
 
 /* Questão 8 */
@@ -143,43 +142,16 @@ int existe(int numeros[],int tamanho,int valor){
 }
 
 /* Questão 11 */
-/* Usando bubblesort para ordenação */
-/* Com um algoritmo de ordenação melhor,
-    a função poderá ser mais eficiente */
+/* Usando função existe() da questão anterior. */
 int conjuntos_iguais(int numeros1[],int numeros2[],int tamanho){
-    int i,aux,continua_ordenacao,continua_operacao;
-
-    /* Ordenando primeiro vetor */
-    do{
-        continua_ordenacao=0;
-        for(i=1;i<tamanho;i++){
-            if(numeros1[i-1]>numeros1[i]){
-                aux=numeros1[i];
-                numeros1[i]=numeros1[i-1];
-                numeros1[i-1]=aux;
-                continua_ordenacao=1;
-            }
-        }
-    }while(continua_ordenacao);
-
-    /* Ordenando segundo vetor */
-    do{
-        continua_ordenacao=0;
-        for(i=1;i<tamanho;i++){
-            if(numeros2[i-1]>numeros2[i]){
-                aux=numeros2[i];
-                numeros2[i]=numeros2[i-1];
-                numeros2[i-1]=aux;
-                continua_ordenacao=1;
-            }
-        }
-    }while(continua_ordenacao);
-
-    /* Comparando vetores e retornando */
-    continua_operacao=1;
-    for(i=0;i<tamanho&&continua_operacao;i++)
-        if(numeros1[i]!=numeros2[i]) continua_operacao=0;
-    return continua_operacao;
+    int i,termo_busca,qte_em_1,qte_em_2;
+    for(i=0;i<tamanho;i++){
+        termo_busca=numeros1[i];
+        qte_em_1=existe(numeros1,tamanho,termo_busca);
+        qte_em_2=existe(numeros2,tamanho,termo_busca);
+        if(qte_em_1!=qte_em_2) return 0;
+    }
+    return 1;
 }
 
 /* Questão 12 */
@@ -265,7 +237,8 @@ void calcula_media(int notas[][3], float media[], int qte){
     for(i=0;i<qte;i++){
         soma=0;
         for(j=0;j<3;j++) soma+=notas[i][j];
-        media[i]=(1.0*soma)/3.0;
+        media[i]=(float)soma;
+        media[i]/=3;
     }
     return;
 }
