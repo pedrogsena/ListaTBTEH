@@ -3,4 +3,6 @@ Lista: Tipos Básicos e Tipos Estruturados Homogêneos (Linguagens de Programaç
 
 --------------------------------------------------
 
+3/31/2017: funcoes.c updated
+
 3/24/2017: funcoes.c added to the repository
